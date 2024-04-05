@@ -1,0 +1,86 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environment": {
+      "value": "dev"
+    },
+    "contextPrefix": {
+      "value": "deploy"
+    },
+    "tags": {
+      "value": {
+        "Application": "SWO"
+      }
+    },
+    "ASESubnet": {
+      "value": "ase2sub"
+    },
+    "PESubnet": {
+      "value": "default"
+    },
+    "vnetname":{
+      "value": "vnet1"
+    },
+    "storageAccounts": {
+      "value": {
+        "stg1":{
+           "name": "samastge0012rtmtde",
+           "tableservices": {
+            "table": [
+              {
+                "name": "table1"
+              },
+              {
+                "name": "table2"
+              }
+            ]
+          },
+            "tags": {}
+        }
+      }
+    },
+    "keyVaults": {
+      "value": {
+          "kv1":{
+             "name": "kv-stg1-test-00123",
+             "tags": {}
+        }
+      }
+    },
+    "asename": {
+        "value": "ase-test-ama-111022"
+      },
+    "appServicePlans": {
+      "value": {
+        "asp1": {
+          "name": "sdsddded0023",
+          "sku": {
+            "name": "I2v2",
+            "tier": "IsolatedV2",
+            "size": "I2v2",
+            "family": "Iv2",
+            "capacity": 1
+          },
+          "tags": {}
+        }
+      }
+    },
+    "applicationInsights": {
+      "value": {
+        "insight1": {
+          "name": "ededede001",
+          "tags": {}
+        }
+      }
+    },
+    "logAnalyticsWorkspaces": {
+      "value": {
+        "log1": {
+          "name": "deedededc001",
+          "tags": {}
+        }
+      }
+    }
+  }
+}

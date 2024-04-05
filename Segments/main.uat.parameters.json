@@ -1,0 +1,303 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "ManagedIdentity":{
+      "value": {
+        "name":"id-sslcert-keyvault-swo-eastus-002",
+        "scope":"SWO-App-Dev"
+      }
+    },
+    "virtualNetwork": {
+      "value": {
+        "name": "vnet_SWO-App-UAT_eastus",
+        "subnets": [
+          {
+            "name": "privateEndpoint-subnet",
+            "addressPrefix": "172.26.160.0/25",
+            "networkSecurityGroupId": "NSG_SWO-App-UAT_eastus_privateEndpoint-subnet",
+            "routeTableId":"rt_swo-app-uat-tofp",
+            "serviceEndpoints": [
+              {
+                "service": "Microsoft.Storage"
+              },
+              {
+                "service": "Microsoft.Sql"
+              },
+              {
+                "service": "Microsoft.KeyVault"
+              },
+              {
+                "service": "Microsoft.Web"
+              }
+            ],
+            "delegations": [],
+            "privateEndpointNetworkPolicies": "Disabled",
+            "privateLinkServiceNetworkPolicies": "Enabled"
+          },
+          {
+            "name": "VirtualNetworkIntegration-subnet",
+            "addressPrefix": "172.26.160.192/26",
+            "networkSecurityGroupId": "NSG_SWO-App-UAT_eastus_VirtualNetworkIntegration-subnet",
+            "routeTableId":"rt_swo-app-uat-tofp",
+            "serviceEndpoints": [
+              {
+                "service": "Microsoft.Sql"
+              },
+              {
+                "service": "Microsoft.KeyVault"
+              }
+            ],
+            "delegations": [
+              {
+                "name": "webServDel",
+                "properties": {
+                  "serviceName": "Microsoft.Web/serverFarms"
+                }
+              }
+            ],
+            "privateEndpointNetworkPolicies": "Disabled",
+            "privateLinkServiceNetworkPolicies": "Enabled"
+          }
+        ],
+        "tags": {}
+      }
+    },
+    "networkSecurityGroups": {
+      "value": [
+        {
+          "name": "NSG_SWO-App-UAT_eastus_privateEndpoint-subnet",
+          "securityRules": [],
+          "tags": {}
+        },
+        {
+          "name": "NSG_SWO-App-UAT_eastus_VirtualNetworkIntegration-subnet",
+          "securityRules": [],
+          "tags": {}
+        }
+      ]
+    },
+    "storageAccounts": {
+      "value": [
+        {
+          "name": "001",
+          "blobServices": {
+            "containers": [
+              {
+                "name": "swo-incident-storage"
+              },
+              {
+                "name": "swo-incident-attachments"
+              }
+            ]
+          },
+          "privateEndpoints": "blob",
+          "tags": {}
+        },
+        {
+          "name": "002",
+          "blobServices": {
+            "containers": []
+          },
+          "privateEndpoints": "all",
+          "tags": {}
+        }
+      ]
+    },
+    "keyVaults": {
+      "value": [
+        {
+          "name": "001",
+          "vaultSku": "Standard",
+          "enablePurgeProtection": true,
+          "enableRbacAuthorization": true,
+          "workspaceResourceId": "001",
+          "diagnosticLogsRetentionInDays": 0,
+          "publicNetworkAccess": "Disabled",
+          "networkAcls": {
+            "bypass": "AzureServices",
+            "defaultAction": "Allow",
+            "ipRules": [],
+            "virtualNetworkRules": []
+          },
+          "roleAssignments": [
+            {
+              "roleDefinitionIdOrName": "Key Vault Secrets Officer",
+              "description": "Key Vault Secrets Officer",
+              "principalIds": [
+                "9edb1052-2162-4548-bb04-4d4239d0e48a",
+                "0fd6ad98-5a32-411b-9c0e-f327fab1f357",
+                "01b06d20-4bd4-4f5d-bf3f-66edf7099bba",
+                "3fffd782-22cd-4c18-ae16-2f1b89202b7c",
+                "da428b45-8cd2-4c96-8de6-01bde57e28b7"
+              ]
+            },
+            {
+              "roleDefinitionIdOrName": "Key Vault Certificates Officer",
+              "description": "Key Vault Certificates Officer",
+              "principalIds": [
+                "9edb1052-2162-4548-bb04-4d4239d0e48a",
+                "0fd6ad98-5a32-411b-9c0e-f327fab1f357",
+                "01b06d20-4bd4-4f5d-bf3f-66edf7099bba",
+                "3fffd782-22cd-4c18-ae16-2f1b89202b7c",
+                "da428b45-8cd2-4c96-8de6-01bde57e28b7"
+              ]
+            },
+            {
+              "roleDefinitionIdOrName": "Owner",
+              "description": "Owner",
+              "principalIds": [
+                "9edb1052-2162-4548-bb04-4d4239d0e48a",
+                "0fd6ad98-5a32-411b-9c0e-f327fab1f357",
+                "01b06d20-4bd4-4f5d-bf3f-66edf7099bba",
+                "da428b45-8cd2-4c96-8de6-01bde57e28b7"
+              ]
+            }
+          ],
+          "tags": {}
+        }
+      ]
+    },
+    "appServicePlans": {
+      "value": [
+        {
+          "name": "001",
+          "workspaceResourceId": "001",
+          "diagnosticLogsRetentionInDays": 0,
+          "sku": {
+            "capacity": "1",
+            "family": "S",
+            "name": "S1",
+            "size": "S1",
+            "tier": "Standard"
+          },
+          "tags": {}
+        }
+      ]
+    },
+    "webApps": {
+      "value": [
+        {
+          "name": "001",
+          "kind": "app",
+          "env": "UAT",
+          "serverFarmResourceId": "001",
+          "systemAssignedIdentity": true,
+          "siteConfig": {},
+          "appSettingsKeyValuePairs": {},
+          "tags": {}
+        }
+      ]
+    },
+    "functionApps": {
+      "value": [
+        {
+          "name": "001",
+          "kind": "functionapp",
+          "serverFarmResourceId": "001",
+          "systemAssignedIdentity": true,
+          "siteConfig": {},
+          "appSettingsKeyValuePairs": {},
+          "storageAccountResourceId": "002",
+          "tags": {}
+        }
+      ]
+    },
+    "functionApps2": {
+      "value": [
+        {
+          "name": "101",
+          "kind": "functionapp",
+          "serverFarmResourceId": "001",
+          "systemAssignedIdentity": true,
+          "siteConfig": {},
+          "appSettingsKeyValuePairs": {},
+          "storageAccountResourceId": "002",
+          "tags": {}
+        }
+      ]
+    },
+    "applicationInsights": {
+      "value": [
+        {
+          "name": "001",
+          "workspaceResourceId": "001",
+          "tags": {}
+        }
+      ]
+    },
+    "logAnalyticsWorkspaces": {
+      "value": [
+        {
+          "name": "001",
+          "tags": {}
+        }
+      ]
+    },
+    "sqldbservers": {
+      "value": [
+        {
+          "name": "001",
+          "administratorLogin": "fdemuser",
+          "databases": [
+            {
+              "name": "001",
+              "skuCapacity": 2,
+              "skuName": "GP_Gen5",
+              "skuTier": "GeneralPurpose",
+              "skuFamily": "Gen5",
+              "tags": {
+                "Application": "SWO",
+                "Vendor": "Microsoft",
+                "Team": "Application",
+                "Bureau": "Response",
+                "Project": "SWO App"
+              }
+            }
+          ],
+          "tags": {}
+        }
+      ]
+    },
+    "rediscaches": {
+      "value": [
+        {
+          "name": "001",
+          "capacity": 1,
+          "skuName": "Standard",
+          "tags": {}
+        }
+      ]
+    },
+    "serviceBusNamespace": {
+      "value": {
+        "name": "001",
+        "sku": "Premium",
+        "diagnosticWorkspaceId": "001",
+        "queues": [
+            {
+              "name": "001",
+              "deadLetteringOnMessageExpiration": true,
+              "defaultMessageTimeToLive": "P14D",
+              "enableBatchedOperations" : true,
+              "maxDeliveryCount": 10,
+              "maxSizeInMegabytes" : 1024           
+            }
+        ],
+        "networkRuleSets":{
+          "publicNetworkAccess": "Disabled"
+        },
+        "tags": {}
+      }
+    },
+    "tags": {
+      "value": {
+        "Application": "SWO",
+        "Vendor": "Microsoft",
+        "Team": "Application",
+        "Bureau": "Response",
+        "Project": "SWO App"
+      }
+    }
+  }
+}

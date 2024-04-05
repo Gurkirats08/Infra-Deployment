@@ -1,0 +1,121 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageAccounts": {
+      "value": [
+        {
+          "name": "001",
+          "tableservices": {
+            "table": [
+              {
+                "name": "table1"
+              },
+              {
+                "name": "table2"
+              }
+            ]
+          },
+          "privateEndpoints": "table",
+          "tags": {}
+        },
+        {
+          "name": "002",
+          "privateEndpoints": "queues",
+          "tags": {}
+        }
+      ]
+    },
+    "keyVaults": {
+      "value": [
+        {
+          "name": "001",
+          "vaultSku": "Standard",
+          "enablePurgeProtection": true,
+          "enableRbacAuthorization": true,
+          "workspaceResourceId": "001",
+          "diagnosticLogsRetentionInDays": 0,
+          "publicNetworkAccess": "Disabled",
+          "networkAcls": {
+            "bypass": "AzureServices",
+            "defaultAction": "Allow",
+            "ipRules": [],
+            "virtualNetworkRules": []
+          },
+          "tags": {}
+        }
+      ]
+    },
+    "appServicePlans": {
+      "value": [
+        {
+          "name": "001",
+          "workspaceResourceId": "001",
+          "diagnosticLogsRetentionInDays": 0,
+          "sku": {
+            "capacity": "1",
+            "family": "S",
+            "name": "S1",
+            "size": "S1",
+            "tier": "Standard"
+          },
+          "tags": {}
+        }
+      ]
+    },
+    "functionApps": {
+      "value": [
+        {
+          "name": "001",
+          "kind": "functionapp",
+          "serverFarmResourceId": "001",
+          "systemAssignedIdentity": true,
+          "siteConfig": {},
+          "appSettingsKeyValuePairs": {},
+          "storageAccountResourceId": "002",
+          "tags": {}
+        }
+      ]
+    },
+    "functionApps2": {
+      "value": [
+        {
+          "name": "101",
+          "kind": "functionapp",
+          "serverFarmResourceId": "001",
+          "systemAssignedIdentity": true,
+          "siteConfig": {},
+          "appSettingsKeyValuePairs": {},
+          "storageAccountResourceId": "002",
+          "tags": {}
+        }
+      ]
+    },
+    "applicationInsights": {
+      "value": [
+        {
+          "name": "001",
+          "workspaceResourceId": "001",
+          "tags": {}
+        }
+      ]
+    },
+    "logAnalyticsWorkspaces": {
+      "value": [
+        {
+          "name": "001",
+          "tags": {}
+        }
+      ]
+    },
+    "tags": {
+      "value": {
+        "Application": "SWO",
+        "Vendor": "Microsoft",
+        "Team": "Application",
+        "Bureau": "Response",
+        "Project": "SWO App"
+      }
+    }
+  }
+}

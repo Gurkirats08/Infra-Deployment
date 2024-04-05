@@ -1,0 +1,11 @@
+{
+    "regioncodes": {
+        "eastus": "eus",
+        "eastus2": "eus2",
+        "centralus": "cus",
+        "westcentralus": "wcus",
+        "westus": "wus",
+        "westus2": "wus2",
+        "westus3": "wus3"
+    }
+}

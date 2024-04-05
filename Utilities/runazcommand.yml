@@ -1,0 +1,55 @@
+parameters:
+  - name: commandText
+    displayName: "Please enter the command text"
+    type: string
+  - name: Environment
+    displayName: "Please select the environment to deploy resources to."
+    type: string
+    values:
+      - DEV
+  - name: Platform
+    displayName: "Please enter the command text"
+    type: string
+    values:
+      - AZ-CLI
+      - AZ-PS
+trigger:
+  - none
+
+pool:
+  name: "Default"
+
+variables:
+  - name: applicationCode
+    value: "FDEM-SWO"
+  #Env Specific
+  - group: ${{ variables.applicationCode }}-${{ parameters.Environment }}
+
+steps:
+  # - task: AzureCLI@2
+  #   inputs:
+  #     azureSubscription: "$(SERVICE_CONNECTION)"
+  #     scriptType: "ps"
+  #     scriptLocation: "inlineScript"
+  #     addSpnToEnvironment: true
+  #     inlineScript: |
+  #       $a = $env:servicePrincipalId
+  #       [string]$a
+  - ${{ if eq(parameters['Platform'], 'AZ-CLI') }}:
+      - task: AzureCLI@2
+        name: "RunAZCLI"
+        inputs:
+          azureSubscription: "$(SERVICE_CONNECTION)"
+          scriptType: "ps"
+          scriptLocation: "inlineScript"
+          inlineScript: |
+            ${{parameters.commandText}}
+  - ${{ if eq(parameters['Platform'], 'AZ-PS') }}:
+      - task: AzurePowerShell@5
+        name: "RunAZPS"
+        inputs:
+          azureSubscription: "$(SERVICE_CONNECTION)"
+          ScriptType: "InlineScript"
+          azurePowerShellVersion: "LatestVersion"
+          Inline: |
+            ${{parameters.commandText}}

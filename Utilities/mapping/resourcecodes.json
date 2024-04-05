@@ -1,0 +1,29 @@
+{
+    "resourceCodes": {
+        "resourceGroup": "rg",
+        "virtualNetwork": "vnet",
+        "subnet": "snet",
+        "networkSecurityGroup": "nsg",
+        "keyVault": "kv",
+        "eventHubNamespace": "evh",
+        "streamAnalyticsCluster": "asac",
+        "streamAnalyticsJob": "asa",
+        "storageAccount": "st",
+        "dataLakeStorage": "dls",
+        "cosmosDBAccount": "cosmos",
+        "serviceBusNamespace": "sb",
+        "logAnalyticsWorkspace": "log",
+        "applicationInsights": "appi",
+        "appServicePlan": "asp",
+        "functionApp": "func",
+        "logicApp": "logic",
+        "rediscache": "redis",
+        "applicationGateway": "agw",
+        "webapp": "web",
+        "sqldbserver": "sql",
+        "sqldb": "sqldb",
+        "azureMonitorPrivateLinkScope": "ampls",
+        "publicIPAddress": "pip",
+        "managedServiceIdentity": "mi"
+    }
+}
